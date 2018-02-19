@@ -1,0 +1,43 @@
+
+language: php
+
+git:
+  depth: 5
+
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+
+matrix:
+ include:
+   - php: hhvm-3.18
+     dist: trusty
+     sudo: required
+
+before_script:
+  - if [[ $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then echo "hhvm.enable_short_tags = On" >> /etc/hhvm/php.ini; fi
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source --dev
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+  - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=clover.xml
+
+after_script:
+  - ./cc-test-reporter after-build --coverage-input-type clover --exit-code $TRAVIS_TEST_RESULT
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+addons:
+  code_climate:
+    repo_token: d16eac66156a1f7a995de17964d4ffdd152821ab52e8470b5dbd5d3406406836
+
+env:
+  global:
+    - CC_TEST_REPORTER_ID=d16eac66156a1f7a995de17964d4ffdd152821ab52e8470b5dbd5d3406406836
