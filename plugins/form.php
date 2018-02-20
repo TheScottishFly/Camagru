@@ -1,8 +1,8 @@
 <?php
 
-function input($name) {
+function input($name, $type) {
     $value = isset($_POST[$name]) ? $_POST[$name] : '';
-    return "<input type='text' id='$name' name='$name' value='$value' />";
+    return "<input type='$type' id='$name' name='$name' value='$value' />";
 }
 
 function textarea($name) {
@@ -20,4 +20,20 @@ function select($name, $options = array()) {
     }
     $return .= "</select>";
     return $return;
+}
+
+function extractMessageForm(){
+    if (isset($_SESSION['messageForm'])){
+        extract($_SESSION['messageForm']);
+        unset($_SESSION['messageForm']);
+        if ($type == 'error')
+            return "<div class='ui error message'><div class='header'>Echec</div><p>$message</p></div>";
+        else
+            return "<div class='$type'>$message</div>";
+    }
+}
+
+function setMessageForm($message, $type = 'success'){
+    $_SESSION['messageForm']['message'] = $message;
+    $_SESSION['messageForm']['type'] = $type;
 }

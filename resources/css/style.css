@@ -1,0 +1,45 @@
+body {
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif !important;
+}
+
+#logo {
+    height: 80%;
+    margin: 10% 0.25%;
+}
+
+.header-menu {
+    height: 2em;
+    margin-bottom: 2em !important;
+}
+
+.header-menu a {
+    color: #3c7a89 !important;
+}
+
+i {
+    margin-right: 3px;
+}
+
+.home-list {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.list-image a img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.form {
+    width: 50%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.form label {
+    font-size: 1.05em !important;
+}
+
+.form .field {
+    padding-bottom: 2em;
+}
