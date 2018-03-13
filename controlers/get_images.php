@@ -1,5 +1,6 @@
 <?php
 include_once "utils.php";
+session_start();
 
 function getAllImages() {
     $db = dbConnect();

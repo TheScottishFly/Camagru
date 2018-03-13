@@ -1,17 +1,33 @@
+<?php session_start(); ?>
+
 <div class="ui massive menu header-menu">
-    <img src="../resources/images/logo.png" id="logo" />
-    <a class="item" href="/">
+    <img src="../resources/images/logo.png" id="logo" class="mobile hidden" />
+    <img src="../resources/images/logomobile.png" id="logo" class="mobile only" />
+    <a class="item" href="/" title="Accueil">
         <i class="fas fa-home"></i>
-        Accueil
+        <p class="mobile hidden">Accueil</p>
     </a>
-    <div class="right menu">
-        <a class="ui item" href="login.php">
-            <i class="fas fa-sign-in-alt"></i>
-            Connexion
-        </a>
-        <a class="ui item" href="register.php">
-            <i class="fas fa-user-plus"></i>
-            Inscription
-        </a>
-    </div>
+    <?php if (!(isset($_SESSION['uid']))) { ?>
+        <div class="right menu">
+            <a class="ui item" href="login.php" title="Connexion">
+                <i class="fas fa-sign-in-alt"></i>
+                <p class="mobile hidden">Connexion</p>
+            </a>
+            <a class="ui item" href="register.php" title="Inscription">
+                <i class="fas fa-user-plus"></i>
+                <p class="mobile hidden">Inscription</p>
+            </a>
+        </div>
+    <?php } else { ?>
+        <div class="right menu">
+            <a class="ui item" href="account.php" title="Compte">
+                <i class="fas fa-user"></i>
+                <p class="mobile hidden"><?php echo $_SESSION['username']; ?></p>
+            </a>
+            <a class="ui item" href="logout.php" title="Déconnexion">
+                <i class="fas fa-sign-out-alt"></i>
+                <p class="mobile hidden">Déconnexion</p>
+            </a>
+        </div>
+    <?php } ?>
 </div>

@@ -1,7 +1,10 @@
 <?php
 
-include_once "plugins/includes.php";
-include_once "controlers/utils.php";
+require_once("plugins/includes.php");
+require_once("controlers/utils.php");
+session_start();
+
+authVerif(false);
 
 if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password1']) && isset($_POST['password2'])){
     if ($_POST['password1'] != $_POST['password2']) {
@@ -10,17 +13,18 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
     else {
         if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             $db = dbConnect();
-            $username = $db->quote($_POST['username']);
-            $email = $db->quote($_POST['email']);
-            $password = $db->quote(sha1($_POST['password1']));
+            $username = htmlentities($_POST['username']);
+            $email = htmlentities($_POST['email']);
+            $password = htmlentities(sha1($_POST['password1']));
 
-            $select = $db->query("SELECT * FROM users WHERE username=$username OR email=$email");
+            $select = $db->prepare("SELECT * FROM users WHERE username=:username OR email=:email");
+            $select->execute(array('username' => $username, 'email' => $email));
             if (count($select->fetchALL()) == 0) {
-                $req = $db->prepare("INSERT INTO users(username, password, email) VALUES(:username, :email, :password)");
-                $req->execute(array('username' => $username, 'email' => $email, 'password' => $password));
+                $req = $db->prepare("INSERT INTO users(username, password, email) VALUES(:username, :password, :email)");
+                $req->execute(array('username' => $username, 'password' => $password, 'email' => $email));
                 mail($_POST['email'], "Inscription reussie", "Bonjour ".$_POST['username'].", votre inscription est validée !");
                 setMessageForm("Vous pouvez maintenant vous connecter sur Camagru !", 'success');
-                header('Location: login.php?success=true');
+                header('Location: login.php');
             }
             else {
                 setMessageForm("Ce nom d'utilisateur ou cet email sont déjà utilisés.", 'error');
