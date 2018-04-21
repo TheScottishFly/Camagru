@@ -14,16 +14,8 @@ if (isset($_POST['title']) && isset($_POST['photo'])){
     $alpha = 'resources/alphas/';
     $select = $db->prepare("INSERT INTO images(name, title, author_id, nb_like) VALUES(:name, :title, :uid, :nb_like)");
     $select->execute(array('name' => $filename, 'title' => $title, 'uid' => $_SESSION['uid'], 'nb_like' => 0));
-    $parts = explode(',', $_POST['photo']);
-    $data = $parts[1];
-    $data = str_replace(' ', '+', $data);
-    $data = base64_decode($data);
+    $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $_POST['photo']));
     file_put_contents($filepath.$filename, $data);
-    $im = imagecreatefrompng($filepath.$filename);
-    $alpha = imagecreatefrompng($alpha .$_POST['alpha'].'.png');
-    imagecopymerge_alpha($im, $alpha, 0, 0, 0, 0, imagesx($alpha), imagesy($alpha), 100);
-    imagepng($im,  $filepath.$filename);
-    imagedestroy($im);
     $select = $db->prepare("SELECT * FROM images WHERE title=:title AND author_id=:uid");
     $select->execute(array('title' => $title, 'uid' => $_SESSION['uid']));
     $result = $select->fetchAll();
@@ -43,7 +35,7 @@ ob_start();
 ?>
 
 <div class="ui grid">
-    <div class="sixteen wide column center aligned">
+    <div class="twelve wide column center aligned">
         <video autoplay="true" id="video">
         </video>
         <br />
@@ -55,13 +47,17 @@ ob_start();
         <br />
         <canvas id="canvas"></canvas>
     </div>
+    <div class="four wide column center aligned">
+
+    </div>
     <div class="sixteen wide column center aligned">
-        <form action="new.php" class="ui form" method="POST" enctype="multipart/form-data">
-            <ul class="selection">
-                <li><label><input type="radio" name="alpha" value="alpha1" checked="checked"><img src=<?= "/resources/alphas/alpha1.png" ?>></label></li>
-                <li><label><input type="radio" name="alpha" value="alpha2"><img src=<?= "/resources/alphas/alpha2.png" ?>></label></li>
-            </ul>
-            <input type="hidden" name="photo" id="photo">
+        <form action="new.php" class="ui form" method="POST" enctype="multipart/form-data" id="postform">
+          <ul class="selection">
+              <li><label><input type="radio" name="alpha" class="alpha" value="alpha1" checked="checked"><img src=<?= "/resources/alphas/alpha1.png" ?>></label></li>
+              <li><label><input type="radio" name="alpha" class="alpha" value="alpha2"><img src=<?= "/resources/alphas/alpha2.png" ?>></label></li>
+              <li><label><input type="radio" name="alpha" class="alpha" value="alpha2"><img src=<?= "/resources/alphas/alpha3.png" ?>></label></li>
+          </ul>
+          <input type="hidden" name="photo" id="photo">
             <?php echo input('title', 'text', "Titre"); ?>
             <br />
             <br />

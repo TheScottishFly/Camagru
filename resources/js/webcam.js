@@ -8,6 +8,8 @@
         width = 320,
         height = 240;
 
+    canvas.style.display = 'none';
+
     navigator.getMedia = ( navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
@@ -41,10 +43,13 @@
         canvas.width = width;
         canvas.height = height;
         canvas.getContext('2d').drawImage(video, 0, 0, width, height);
+        var img = document.querySelector('.alpha:checked').nextSibling;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
         photo.value = canvas.toDataURL();
     }
 
     takebutton.addEventListener('click', function(ev){
+        canvas.style.display = '';
         takepicture();
         ev.preventDefault();
     }, false);
