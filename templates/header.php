@@ -19,6 +19,10 @@
             </a>
         </div>
     <?php } else { ?>
+        <a class="item" href="/new.php" title="Nouvelle image">
+            <i class="fas fa-camera-retro"></i>
+            <p class="mobile hidden">Nouvelle image</p>
+        </a>
         <div class="right menu">
             <a class="ui item" href="account.php" title="Compte">
                 <i class="fas fa-user"></i>

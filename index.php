@@ -13,7 +13,7 @@ ob_start();
     <div class="doubling six column row list-image">
         <?php while ($img = $images->fetch()) { ?>
             <div class="column column-photo">
-                <a href=<?= "image.php/".$img['id'] ?>>
+                <a href=<?= "image.php?img=".$img['id'] ?>>
                     <img src=<?= "/resources/photos/".$img['name'] ?>/>
                 </a>
             </div>
