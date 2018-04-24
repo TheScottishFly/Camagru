@@ -2,7 +2,7 @@
 
 require_once("controlers/utils.php");
 require_once("plugins/includes.php");
-session_start();
+require_once("controlers/get_images.php");
 
 authVerif(true);
 
@@ -29,6 +29,7 @@ if (isset($_POST['title']) && isset($_POST['photo'])){
     }
 }
 
+$images = getImagesByAuth($_SESSION['uid']);
 $title = "Nouvelle image";
 ob_start();
 
@@ -47,8 +48,16 @@ ob_start();
         <br />
         <canvas id="canvas"></canvas>
     </div>
-    <div class="four wide column center aligned">
-
+    <div class="four wide column center aligned ui grid new-list">
+        <div class="doubling two column row list-image">
+            <?php while ($img = $images->fetch()) { ?>
+                <div class="column">
+                    <a href=<?= "image.php?img=".$img['id'] ?>>
+                        <img src=<?= "/resources/photos/".$img['name'] ?>/>
+                    </a>
+                </div>
+            <?php } ?>
+        </div>
     </div>
     <div class="sixteen wide column center aligned">
         <form action="new.php" class="ui form" method="POST" enctype="multipart/form-data" id="postform">

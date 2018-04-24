@@ -1,5 +1,3 @@
-<?php session_start(); ?>
-
 <div class="ui massive menu header-menu">
     <img src="../resources/images/logo.png" id="logo" class="mobile hidden" />
     <img src="../resources/images/logomobile.png" id="logo" class="mobile only" />

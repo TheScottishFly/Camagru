@@ -3,16 +3,16 @@
 include_once "controlers/get_images.php";
 
 if (isset($_GET["img"]))
-    $image = getOneImage($_GET["img"]);
+    $img = getOneImage($_GET["img"]);
 else
     header("Location: /");
 
-$title = "Image n°" . $image["id"];
+$title = $img["title"] . ' - Image';
 ob_start();
 
 ?>
 
-<h1><?= $image ?></h1>
+<img src=<?= "/resources/photos/".$img['name'] ?>/>
 
 <?php
 

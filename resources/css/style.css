@@ -1,3 +1,7 @@
+html {
+    min-width: 450px;
+}
+
 body {
     font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif !important;
 }
@@ -42,6 +46,11 @@ i {
     padding-right: 5%;
 }
 
+.new-list {
+    border-radius: 5px;
+    border: 2px solid silver;
+}
+
 .list-image a img {
     max-height: 100%;
     max-width: 100%;
@@ -72,7 +81,6 @@ i {
 
 .selection {
     list-style: none;
-    text-align: center;
 }
 
 .selection li {

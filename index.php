@@ -1,7 +1,6 @@
 <?php
 
 require_once("controlers/get_images.php");
-session_start();
 
 $images = getAllImages();
 $title = "Accueil";
