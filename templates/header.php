@@ -1,6 +1,6 @@
 <div class="ui massive menu header-menu">
-    <img src="../resources/images/logo.png" id="logo" class="mobile hidden" />
-    <img src="../resources/images/logomobile.png" id="logo" class="mobile only" />
+    <img src="../resources/images/logo.png" id="logo-classic" class="mobile hidden" />
+    <img src="../resources/images/logomobile.png" id="logo-mobile" class="mobile only" />
     <a class="item" href="/" title="Accueil">
         <i class="fas fa-home"></i>
         <p class="mobile hidden">Accueil</p>
