@@ -20,8 +20,8 @@ if (isset($_POST['title']) && isset($_POST['photo'])){
     $select->execute(array('title' => $title, 'uid' => $_SESSION['uid']));
     $result = $select->fetchAll();
     if (count($result) > 0) {
-        $image = $result[0];
-        header('Location: image.php/' . $image['id']);
+        $id = $result[0]['id'];
+        header("Location: image.php?img=$id");
     }
     else {
         header('Location: new.php');
@@ -61,12 +61,12 @@ ob_start();
     </div>
     <div class="sixteen wide column center aligned">
         <form action="new.php" class="ui form" method="POST" enctype="multipart/form-data" id="postform">
-          <ul class="selection">
-              <li><label><input type="radio" name="alpha" class="alpha" value="alpha1" checked="checked"><img src=<?= "/resources/alphas/alpha1.png" ?>></label></li>
-              <li><label><input type="radio" name="alpha" class="alpha" value="alpha2"><img src=<?= "/resources/alphas/alpha2.png" ?>></label></li>
-              <li><label><input type="radio" name="alpha" class="alpha" value="alpha2"><img src=<?= "/resources/alphas/alpha3.png" ?>></label></li>
-          </ul>
-          <input type="hidden" name="photo" id="photo">
+            <ul class="selection">
+                <li><label><input type="radio" name="alpha" class="alpha" value="alpha1" checked="checked"><img src=<?= "/resources/alphas/alpha1.png" ?>></label></li>
+                <li><label><input type="radio" name="alpha" class="alpha" value="alpha2"><img src=<?= "/resources/alphas/alpha2.png" ?>></label></li>
+                <li><label><input type="radio" name="alpha" class="alpha" value="alpha2"><img src=<?= "/resources/alphas/alpha3.png" ?>></label></li>
+            </ul>
+            <input type="hidden" name="photo" id="photo">
             <?php echo input('title', 'text', "Titre"); ?>
             <br />
             <br />

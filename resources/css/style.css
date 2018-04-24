@@ -51,6 +51,7 @@ i {
 .home-list {
     padding-left: 5%;
     padding-right: 5%;
+    text-align: center;
 }
 
 .new-list {
@@ -82,7 +83,7 @@ i {
 }
 
 .column-photo img {
-    padding: 0.5em;
+    padding: 1em;
     border-radius: 25px;
 }
 
@@ -112,4 +113,11 @@ i {
 
 .selection label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
     border: 4px solid dimgrey !important;
+}
+
+.image-main {
+    width: 20%;
+    min-width: 400px;
+    border-radius: 15px;
+    margin-bottom: 5em;
 }

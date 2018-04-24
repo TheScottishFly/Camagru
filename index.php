@@ -9,7 +9,7 @@ ob_start();
 ?>
 
 <div class="ui grid home-list">
-    <div class="doubling six column row list-image">
+    <div class="doubling five column row list-image">
         <?php while ($img = $images->fetch()) { ?>
             <div class="column column-photo">
                 <a href=<?= "image.php?img=".$img['id'] ?>>

@@ -28,7 +28,7 @@ try {
         );
         CREATE TABLE `comments` (
             `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            `author_id` int(11) NOT NULL,
+            `author` varchar(255) NOT NULL,
             `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
             `text` longtext NOT NULL,
             `image_id` int(11) NOT NULL
