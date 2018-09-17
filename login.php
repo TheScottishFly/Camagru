@@ -1,82 +1,34 @@
 <?php
-
-require_once("plugins/includes.php");
-require_once("controlers/utils.php");
-session_start();
-
-authVerif(false);
-
+$auth = 0;
+include 'lib/includes.php';
 if (isset($_POST['username']) && isset($_POST['password'])){
-    $db = dbConnect();
-    $username = htmlentities($_POST['username']);
-    $password = htmlentities(sha1($_POST['password']));
-
-    $select = $db->prepare("SELECT * FROM users WHERE username=:username AND password=:password");
-    $select->execute(array('username' => $username, 'password' => $password));
-    $result = $select->fetchAll();
-    if (count($result) > 0) {
-        $user = $result[0];
-        $_SESSION['uid'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        header('Location: index.php');
-    }
-    else {
-        setMessageForm("Echec d'authentification.", 'error');
-    }
+	$username = $db->quote($_POST['username']);
+	$password = sha1($_POST['password']);
+	$sql = "SELECT * FROM users WHERE username=$username AND password='$password'";
+	$select = $db->query($sql);
+	if ($select->rowCount() > 0){
+		$_SESSION['Auth'] = $select->fetch();
+		setFlash('Vous êtes connecté');
+		header('Location:'.WEBROOT.'admin/index.php');  
+		die();
+	}
 }
-
-$title = "Connexion";
-ob_start();
-
+include 'partials/header.php';
 ?>
+	<div class="connection">
+		<h1 class="title"><a href="/">CAMAGRU</a></h1>
+		<form action="#" method="post">
+			<div class="formulaire username">
+				<!-- <input type="text" placeholder="username"> -->
+				<?php echo input('username'); ?>
+			</div>
+			<div class="formulaire password">
+				<input type="password" id="password" name="password">
+			</div>
+			<div class="formulaire submit">
+				<input type="submit" value="Se connecter">
+			</div>
+		</form>
+	</div>
+<?php include 'partials/footer.php'; 
 
-<?php if (isset($_SESSION['messageForm']) && $_SESSION['messageForm']['type'] == 'error') { ?>
-
-    <form class="ui form error" action="login.php" method="POST">
-        <?php echo extractMessageForm(); ?>
-        <div class="field">
-            <label>Nom d'utilisateur</label>
-            <?php echo input('username', 'text'); ?>
-        </div>
-        <div class="field">
-            <label>Mot de passe</label>
-            <?php echo input('password', 'password'); ?>
-        </div>
-        <button class="ui button teal right floated" type="submit">Valider</button>
-    </form>
-
-<?php } elseif (isset($_SESSION['messageForm']) && $_SESSION['messageForm']['type'] == 'success') { ?>
-
-    <form class="ui form success" action="login.php" method="POST">
-        <?php echo extractMessageForm(); ?>
-        <div class="field">
-            <label>Nom d'utilisateur</label>
-            <?php echo input('username', 'text'); ?>
-        </div>
-        <div class="field">
-            <label>Mot de passe</label>
-            <?php echo input('password', 'password'); ?>
-        </div>
-        <button class="ui button teal right floated" type="submit">Valider</button>
-    </form>
-
-<?php } else { ?>
-
-    <form class="ui form" action="login.php" method="POST">
-        <div class="field">
-            <label>Nom d'utilisateur</label>
-            <?php echo input('username', 'text'); ?>
-        </div>
-        <div class="field">
-            <label>Mot de passe</label>
-            <?php echo input('password', 'password'); ?>
-        </div>
-        <button class="ui button teal right floated" type="submit">Valider</button>
-    </form>
-
-<?php }
-
-$content = ob_get_clean();
-require('templates/layout.php');
-
-?>
