@@ -27,7 +27,7 @@
 
 /* line 22, ../sass/style.scss */
 .home {
-  background: #9b59b6;
+  background: #000099;
   font-family: helvetica, Arial;
 }
 /* line 25, ../sass/style.scss */
@@ -59,7 +59,7 @@
 
 /* line 49, ../sass/style.scss */
 .connection, .newuser, .forget {
-  background: #9b59b6;
+  background: #000099;
   font-family: helvetica, Arial;
 }
 /* line 53, ../sass/style.scss */

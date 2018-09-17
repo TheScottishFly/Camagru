@@ -33,7 +33,7 @@
 
 /* line 22, ../sass/style.scss */
 .home {
-  background: #9b59b6;
+  background: #000099;
   font-family: helvetica, Arial;
 }
 /* line 25, ../sass/style.scss */
@@ -65,7 +65,7 @@
 
 /* line 49, ../sass/style.scss */
 .connection, .newuser, .forget {
-  background: #9b59b6;
+  background: #000099;
   font-family: helvetica, Arial;
 }
 /* line 53, ../sass/style.scss */
@@ -89,7 +89,7 @@
 /* line 67, ../sass/style.scss */
 .connection form .formulaire input:focus, .newuser form .formulaire input:focus, .forget form .formulaire input:focus {
   outline: none;
-  border-bottom: 2px solid #95a5a6;
+  border-bottom: 2px solid #000099;
   transition: border-bottom 0.5s;
 }
 /* line 74, ../sass/style.scss */

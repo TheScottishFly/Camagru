@@ -41,7 +41,7 @@ include 'partials/header.php';
 				<input type="password" id="password" name="password">
 			</div>
 			<div class="formulaire submit">
-				<input type="submit" value="Creer mon compte">
+				<input type="submit" value="Submit">
 			</div>
 		</form>
 	</div>

@@ -19,14 +19,13 @@ include 'partials/header.php';
 		<h1 class="title"><a href="/">CAMAGRU</a></h1>
 		<form action="#" method="post">
 			<div class="formulaire username">
-				<!-- <input type="text" placeholder="username"> -->
 				<?php echo input('username'); ?>
 			</div>
 			<div class="formulaire password">
 				<input type="password" id="password" name="password">
 			</div>
 			<div class="formulaire submit">
-				<input type="submit" value="Se connecter">
+				<input type="submit" value="Submit">
 			</div>
 		</form>
 	</div>
