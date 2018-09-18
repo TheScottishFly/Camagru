@@ -36,18 +36,19 @@ if (isset($_POST['username']) && isset($_POST['q']) && isset($_POST['password'])
 }
 include 'partials/header.php';
 ?>
-	<div class="connection">
+	<div>
 		<form action="#" method="post">
-			<div class="formulaire username">
+			<div class="form-item">
+			    <label>Username</label>
 				<?php echo input('username'); ?>
 			</div>
-			<div class="formulaire password">
+			<div class="form-item">
+			    <label>Password</label>
 				<input type="password" id="password" name="password">
 			</div>
 			<input type="hidden" name="q" value='<?php if (isset($_GET["q"])) { echo $_GET["q"];} ?>' />
-		
-			<div class="formulaire submit">
-				<input type="submit" value="Reset">
+			<div class="form-item is-buttons">
+				<button class="button" type="submit">Reset</button>
 			</div>
 		</form>
 	</div>

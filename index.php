@@ -8,12 +8,12 @@ include 'partials/header.php';
 
 ?>
 
-	<h1  class="title"><a href="/">CAMAGRU</a></h1>
+	<h1><a href="/">CAMAGRU</a></h1>
 
-	<ul class="menu">
-		<li><a href="<?php echo WEBROOT.'login.php'; ?>">Login</a></li>
-		<li><a href="<?php echo WEBROOT.'newuser.php'; ?>">Register</a></li>
-		<li><a href="<?php echo WEBROOT.'forget.php'; ?>">Forgot</a></li>
+	<div class="is-container-row">
+		<div><a href="<?php echo WEBROOT.'login.php'; ?>">Login</a></div>
+		<div><a href="<?php echo WEBROOT.'newuser.php'; ?>">Register</a></div>
+		<div><a href="<?php echo WEBROOT.'forget.php'; ?>">Forgot</a></div>
 	</ul>
 
 <?php include 'partials/footer.php'; ?>
