@@ -13,8 +13,6 @@ if (isset($_POST['username'])) {
     $username = htmlentities($_POST['username']);
     $select = $db->prepare("UPDATE users SET username = ? WHERE id = ?");
     $select->execute(array($username, $_SESSION["uid"]));
-    $_SESSION['username'] = $username;
-    $_SESSION['user']['username'] = $username;
 }
 if ($err == 0 && isset($_POST['email'])) {
     if (isset($_POST['email']) && !(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
@@ -26,7 +24,6 @@ if ($err == 0 && isset($_POST['email'])) {
         $select = $db->prepare("UPDATE users SET email = ? WHERE id = ?");
         $select->execute(array($email, $_SESSION["uid"]));
     }
-    $_SESSION['user']['email'] = $email;
 }
 if ($err == 0 && isset($_POST['password1']) && isset($_POST['password2']) && strlen($_POST['password1']) > 7 && strlen($_POST['password2']) > 7) {
     if ($_POST['password1'] != $_POST['password2']) {
@@ -45,15 +42,22 @@ if ($err == 0 && isset($_POST['password1']) && isset($_POST['password2']) && str
     }
 }
 if ($err == 0) {
-    if (isset($_POST['mail_comment']) && $_POST['mail_comment'] == 'mail_comment') {
+    if (isset($_POST['mail_comment'])) {
         $select = $db->prepare("UPDATE users SET mail_comment = 1 WHERE id = ?");
         $select->execute(array($_SESSION["uid"]));
-        $_SESSION['user']['mail_comment'] = 1;
     } else {
         $select = $db->prepare("UPDATE users SET mail_comment = 0 WHERE id = ?");
         $select->execute(array($_SESSION["uid"]));
-        $_SESSION['user']['mail_comment'] = 0;
     }
+}
+
+$select = $db->prepare("SELECT * FROM users WHERE id = ?");
+$select->execute(array($_SESSION['uid']));
+$result = $select->fetchAll();
+if (count($result) > 0) {
+    $user = $result[0];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['user'] = $user;
 }
 
 $title = "Votre compte";
