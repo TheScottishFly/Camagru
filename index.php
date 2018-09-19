@@ -6,7 +6,20 @@ $images = getAllImages();
 $title = "Accueil";
 ob_start();
 
-?>
+if (isset($_SESSION['messageForm'])) {
+    if ($_SESSION['messageForm']['type'] == 'error') { ?>
+
+    <form class="ui form error">
+        <?php echo extractMessageForm(); ?>
+    </form>
+
+<?php } else { ?>
+
+    <form class="ui form success">
+        <?php echo extractMessageForm(); ?>
+    </form>
+
+<?php } } ?>
 
 <div class="ui grid home-list">
     <div class="doubling five column row list-image">

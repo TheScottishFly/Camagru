@@ -16,7 +16,7 @@ function dbConnect() {
 function authVerif($bool) {
     if ($bool == true and !(isset($_SESSION['uid'])))
             header('Location: index.php');
-    elseif ($bool == false and (isset($_SESSION['uid'])))
+    else if ($bool == false and (isset($_SESSION['uid'])))
             header('Location: index.php');
 }
 

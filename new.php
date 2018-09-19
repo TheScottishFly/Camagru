@@ -33,27 +33,27 @@ $images = getImagesByAuth($_SESSION['uid']);
 $title = "Nouvelle image";
 ob_start();
 
-?>
+if ($_SESSION['user']['confirm']) { ?>
 
 <div class="ui grid">
     <div class="twelve wide column center aligned">
         <video autoplay="true" id="video">
         </video>
-        <br />
-        <br />
+        <br/>
+        <br/>
         <button type="button" id="takebutton" class="ui button teal">
             <i class="fas fa-camera"></i>
         </button>
-        <br />
-        <br />
+        <br/>
+        <br/>
         <canvas id="canvas"></canvas>
     </div>
     <div class="four wide column center aligned ui grid new-list">
         <div class="doubling two column row list-image">
             <?php while ($img = $images->fetch()) { ?>
                 <div class="column">
-                    <a href=<?= "image.php?img=".$img['id'] ?>>
-                        <img src=<?= "/resources/photos/".$img['name'] ?>/>
+                    <a href=<?= "image.php?img=" . $img['id'] ?>>
+                        <img src=<?= "/resources/photos/" . $img['name'] ?>/>
                     </a>
                 </div>
             <?php } ?>
@@ -62,14 +62,17 @@ ob_start();
     <div class="sixteen wide column center aligned">
         <form action="new.php" class="ui form" method="POST" enctype="multipart/form-data" id="postform">
             <ul class="selection">
-                <li><label><input type="radio" name="alpha" class="alpha" value="alpha1" checked="checked"><img src=<?= "/resources/alphas/alpha1.png" ?>></label></li>
-                <li><label><input type="radio" name="alpha" class="alpha" value="alpha2"><img src=<?= "/resources/alphas/alpha2.png" ?>></label></li>
-                <li><label><input type="radio" name="alpha" class="alpha" value="alpha2"><img src=<?= "/resources/alphas/alpha3.png" ?>></label></li>
+                <li><label><input type="radio" name="alpha" class="alpha" value="alpha1" checked="checked"><img
+                                src=<?= "/resources/alphas/alpha1.png" ?>></label></li>
+                <li><label><input type="radio" name="alpha" class="alpha" value="alpha2"><img
+                                src=<?= "/resources/alphas/alpha2.png" ?>></label></li>
+                <li><label><input type="radio" name="alpha" class="alpha" value="alpha2"><img
+                                src=<?= "/resources/alphas/alpha3.png" ?>></label></li>
             </ul>
             <input type="hidden" name="photo" id="photo">
             <?php echo input('title', 'text', "Titre"); ?>
-            <br />
-            <br />
+            <br/>
+            <br/>
             <button type="submit" class="ui button green">
                 <i class="fas fa-save"></i>
             </button>
@@ -79,7 +82,17 @@ ob_start();
 
 <script src="../resources/js/webcam.js" type="text/javascript"></script>
 
-<?php
+<?php } else { ?>
+
+<div class="ui grid">
+    <div class="sixteen wide column center aligned">
+        <br />
+        <p>Il est necessaire de confirmer votre compte pour pouvoir partager vos montages.</p>
+        <p>Il vous suffit de cliquer sur le lien recu dans le mail d'inscription.</p>
+    </div>
+</div>
+
+<?php }
 
 $content = ob_get_clean();
 require('templates/layout.php');

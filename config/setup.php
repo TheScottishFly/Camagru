@@ -24,7 +24,9 @@ try {
             `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             `username` varchar(255) NOT NULL,
             `password` varchar(255) NOT NULL,
-            `email` varchar(255) NOT NULL
+            `email` varchar(255) NOT NULL,
+            `confirm` NOT NULL,
+            `token` varchar(255) NOT NULL
         );
         CREATE TABLE `comments` (
             `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,

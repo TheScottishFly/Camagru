@@ -13,11 +13,24 @@ if (isset($_GET["img"])) {
 else
     header("Location: /");
 
-if (isset($_POST['comment'])){
+if (isset($_POST['comment']) && isset($_SESSION['uid'])){
     $db = dbConnect();
     $img_id = substr($_POST['img'], 0, -1);
     $select = $db->prepare("INSERT INTO comments(author, date, text, image_id) VALUES(:author, :date, :text, :image_id)");
     $select->execute(array('author' => $_SESSION['username'], 'date' => date("Y-m-d H:i:s"), 'text' => htmlentities($_POST['comment']), 'image_id' => $img_id));
+    $select = $db->prepare("SELECT * FROM images WHERE id = ?");
+    $select->execute(array($img_id));
+    $result = $select->fetchAll();
+    if (count($result) > 0) {
+        $image = $result[0];
+        $select = $db->prepare("SELECT * FROM users WHERE id = ?");
+        $select->execute(array($image['author_id']));
+        $result = $select->fetchAll();
+        if (count($result) > 0) {
+            $user = $result[0];
+            mail($user["email"], "Nouveau commentaire", "Un nouveau commentaire a ete poste sur l'image " . $image['title'] . ".", $headers);
+        }
+    }
     $url = "image.php?img=$img_id";
     header("Location: ".$url);
 }
@@ -34,15 +47,17 @@ ob_start();
 <div class="ui grid">
     <div class="sixteen wide column center aligned">
         <img class="image-main" src=<?= "/resources/photos/".$img['name'] ?>/>
-        <form action="image.php" class="ui form" method="POST" id="postform">
-            <input type="hidden" name="img" id="img" value=<?= $_GET["img"] ?>/>
-            <?php echo input('comment', 'text', "Commentaire"); ?>
-            <br />
-            <br />
-            <button type="submit" class="ui button green">
-                <i class="fas fa-check"></i>
-            </button>
-        </form>
+        <?php if (isset($_SESSION['uid'])) { ?>
+            <form action="image.php" class="ui form" method="POST" id="postform">
+                <input type="hidden" name="img" id="img" value=<?= $_GET["img"] ?>/>
+                <?php echo input('comment', 'text', "Commentaire"); ?>
+                <br />
+                <br />
+                <button type="submit" class="ui button green">
+                    <i class="fas fa-check"></i>
+                </button>
+            </form>
+        <?php } ?>
     </div>
     <div class="sixteen wide column center aligned">
         <br />
