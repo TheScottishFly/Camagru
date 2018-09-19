@@ -33,7 +33,7 @@ $images = getImagesByAuth($_SESSION['uid']);
 $title = "Nouvelle image";
 ob_start();
 
-if ($_SESSION['user']['confirm']) { ?>
+?>
 
 <div class="ui grid">
     <div class="twelve wide column center aligned">
@@ -82,17 +82,7 @@ if ($_SESSION['user']['confirm']) { ?>
 
 <script src="../resources/js/webcam.js" type="text/javascript"></script>
 
-<?php } else { ?>
-
-<div class="ui grid">
-    <div class="sixteen wide column center aligned">
-        <br />
-        <p>Il est necessaire de confirmer votre compte pour pouvoir partager vos montages.</p>
-        <p>Il vous suffit de cliquer sur le lien recu dans le mail d'inscription.</p>
-    </div>
-</div>
-
-<?php }
+<?php
 
 $content = ob_get_clean();
 require('templates/layout.php');

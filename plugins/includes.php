@@ -1,6 +1,6 @@
 <?php
 
-$headers = "From: playmo@le-101.fr\r\n";
+$headers = "From: <playmo@le-101.fr>\r\n";
 $headers .= "X-Mailer: PHP ".phpversion()."\n";
 $headers .= "X-Priority: 1 \n";
 $headers .= "Mime-Version: 1.0\n";

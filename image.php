@@ -23,12 +23,12 @@ if (isset($_POST['comment']) && isset($_SESSION['uid'])){
     $result = $select->fetchAll();
     if (count($result) > 0) {
         $image = $result[0];
-        $select = $db->prepare("SELECT * FROM users WHERE id = ?");
+        $select = $db->prepare("SELECT * FROM users WHERE id = ? AND mail_comment = 1");
         $select->execute(array($image['author_id']));
         $result = $select->fetchAll();
         if (count($result) > 0) {
             $user = $result[0];
-            mail($user["email"], "Nouveau commentaire", "Un nouveau commentaire a ete poste sur l'image " . $image['title'] . ".", $headers);
+            mail("<".$user["email"].">", "Nouveau commentaire", "Un nouveau commentaire a ete poste sur l'image " . $image['title'] . ".", $headers);
         }
     }
     $url = "image.php?img=$img_id";

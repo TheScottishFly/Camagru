@@ -22,14 +22,14 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
         $username = htmlentities($_POST['username']);
         $email = htmlentities($_POST['email']);
         $password = htmlentities(sha1($_POST['password1']));
+        $token = bin2hex(openssl_random_pseudo_bytes(64));
 
         $select = $db->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
         $select->execute(array($username, $email));
         if (count($select->fetchALL()) == 0) {
-            $token = bin2hex(random_bytes(64));
-            $req = $db->prepare("INSERT INTO users(username, password, email, confirm, token) VALUES(:username, :password, :email, FALSE, :token)");
+            $req = $db->prepare("INSERT INTO users(username, password, email, confirm, token, mail_comment) VALUES(:username, :password, :email, 0, :token, 1)");
             $req->execute(array('username' => $username, 'password' => $password, 'email' => $email, 'token' => $token));
-            mail($_POST['email'], "Inscription reussie", "Bonjour ".$_POST['username'].", votre inscription est validee !\n\nMerci de confirmer votre compte : http://localhost:8000/confirm.php?token=".$token."", $headers);
+            mail("<".$_POST['email'].">", "Inscription reussie", "Bonjour ".$_POST['username'].", votre inscription est validee !\n\nMerci de confirmer votre compte : http://localhost:8000/confirm.php?token=".$token."", $headers);
             setMessageForm("Vous pouvez maintenant vous connecter sur Camagru !", 'success');
             header('Location: login.php');
         }
