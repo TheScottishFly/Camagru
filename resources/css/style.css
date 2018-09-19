@@ -1,0 +1,123 @@
+html {
+    min-width: 450px;
+}
+
+body {
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif !important;
+}
+
+@media only screen and (max-width: 767px) {
+    [class*="mobile hidden"],
+    [class*="tablet only"]:not(.mobile),
+    [class*="computer only"]:not(.mobile),
+    [class*="large monitor only"]:not(.mobile),
+    [class*="widescreen monitor only"]:not(.mobile),
+    [class*="or lower hidden"] {
+        display: none !important;
+    }
+}
+
+@media only screen and (min-width: 767px) {
+    [class*="mobile only"] {
+        display: none !important;
+    }
+}
+
+#logo-classic {
+    height: 80%;
+    margin-left: 0.25%;
+    margin-top: 0.225%;
+}
+
+#logo-mobile {
+    height: 80%;
+    margin-left: 0.25%;
+    margin-top: 0.75%;
+}
+
+.header-menu {
+    height: 2em;
+    margin-bottom: 2em !important;
+}
+
+.header-menu a {
+    color: #3c7a89 !important;
+}
+
+i {
+    margin-right: 3px;
+}
+
+.home-list {
+    padding-left: 5%;
+    padding-right: 5%;
+    text-align: center;
+}
+
+.new-list {
+    border-radius: 5px;
+    border: 2px solid silver;
+}
+
+.list-image a img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.form {
+    width: 50%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.form label {
+    font-size: 1.05em !important;
+}
+
+.form .field {
+    padding-bottom: 2em;
+}
+
+#canvas, #photo, video {
+    border-radius: 15px;
+}
+
+.column-photo img {
+    padding: 1em;
+    border-radius: 25px;
+}
+
+.selection {
+    list-style: none;
+}
+
+.selection li {
+    display: inline;
+}
+
+.selection img {
+    height: 250px;
+    width: 250px;
+    border: 1px solid gainsboro !important;
+}
+
+.selection label > input{ /* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+}
+
+.selection label > input + img{ /* IMAGE STYLES */
+    cursor: pointer;
+    border: 4px solid transparent;
+}
+
+.selection label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+    border: 4px solid dimgrey !important;
+}
+
+.image-main {
+    width: 20%;
+    min-width: 400px;
+    border-radius: 15px;
+    margin-bottom: 5em;
+}

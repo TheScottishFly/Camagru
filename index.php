@@ -1,19 +1,28 @@
 <?php
-$auth = 0;
-include 'lib/includes.php';
-include 'partials/header.php';
 
-// $select = $db->query("SELECT works.name, works.id, works.slug, images.name as image_name FROM works LEFT JOIN images ON images.id = works.image_id");
-// $works = $select->fetchAll();
+require_once("controlers/get_images.php");
+
+$images = getAllImages();
+$title = "Accueil";
+ob_start();
 
 ?>
 
-	<h1><a href="/">CAMAGRU</a></h1>
+<div class="ui grid home-list">
+    <div class="doubling five column row list-image">
+        <?php while ($img = $images->fetch()) { ?>
+            <div class="column column-photo">
+                <a href=<?= "image.php?img=".$img['id'] ?>>
+                    <img src=<?= "/resources/photos/".$img['name'] ?>/>
+                </a>
+            </div>
+        <?php } ?>
+    </div>
+</div>
 
-	<div class="is-container-row">
-		<div><a href="<?php echo WEBROOT.'login.php'; ?>">Login</a></div>
-		<div><a href="<?php echo WEBROOT.'newuser.php'; ?>">Register</a></div>
-		<div><a href="<?php echo WEBROOT.'forget.php'; ?>">Forgot</a></div>
-	</ul>
+<?php
 
-<?php include 'partials/footer.php'; ?>
+$content = ob_get_clean();
+require('templates/layout.php');
+
+?>
