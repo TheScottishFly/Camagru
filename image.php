@@ -4,8 +4,12 @@ include_once "controlers/get_images.php";
 include_once "controlers/utils.php";
 require_once("plugins/includes.php");
 
-if (isset($_GET["img"])) {
-    $img = getOneImage($_GET["img"]);
+if (isset($_GET["img"]) || isset($_POST["img"])) {
+    if (isset($_GET["img"])) {
+        $img = getOneImage($_GET["img"]);
+    } else if (isset($_POST["img"])) {
+        $img = getOneImage($_POST["img"]);
+    }
     if (!isset($img["id"])) {
         header("Location: /");
     }
@@ -33,6 +37,13 @@ if (isset($_POST['comment']) && isset($_SESSION['uid'])){
     }
     $url = "image.php?img=$img_id";
     header("Location: ".$url);
+} else if (isset($_POST['like']) && isset($_SESSION['uid'])) {
+    $db = dbConnect();
+    $img_id = substr($_POST['img'], 0, -1);
+    $select = $db->prepare("UPDATE images SET nb_like = ? WHERE id = ?");
+    $select->execute(array($img['nb_like'] + 1, $img_id));
+    $url = "image.php?img=$img_id";
+    header("Location: ".$url);
 }
 
 $title = $img["title"] . ' - Image';
@@ -48,6 +59,15 @@ ob_start();
     <div class="sixteen wide column center aligned">
         <img class="image-main" src=<?= "/resources/photos/".$img['name'] ?>/>
         <?php if (isset($_SESSION['uid'])) { ?>
+            <form action="image.php" class="ui form" method="POST" id="postform">
+                <input type="hidden" name="img" id="img" value=<?= $_GET["img"] ?>/>
+                <input type="hidden" name="like" id="like"/>
+                <button type="submit" class="ui button blue">
+                    <i class="far fa-thumbs-up"></i> <?php echo $img['nb_like']; ?>
+                </button>
+                <br />
+                <br />
+            </form>
             <form action="image.php" class="ui form" method="POST" id="postform">
                 <input type="hidden" name="img" id="img" value=<?= $_GET["img"] ?>/>
                 <?php echo input('comment', 'text', "Commentaire"); ?>

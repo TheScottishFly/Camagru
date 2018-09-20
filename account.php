@@ -45,7 +45,7 @@ if ($err == 0) {
     if (isset($_POST['mail_comment'])) {
         $select = $db->prepare("UPDATE users SET mail_comment = 1 WHERE id = ?");
         $select->execute(array($_SESSION["uid"]));
-    } else {
+    } else if (count($_POST) > 0) {
         $select = $db->prepare("UPDATE users SET mail_comment = 0 WHERE id = ?");
         $select->execute(array($_SESSION["uid"]));
     }
@@ -102,7 +102,7 @@ ob_start();
     </div>
     <div class="field">
         <label>Mail commentaire</label>
-        <input type="checkbox" id="mail_comment" name="mail_comment" value="mail_comment" <?php if ($_SESSION["user"]["mail_comment"] == 1) {echo 'checked';} ?>>
+        <input type="checkbox" name="mail_comment" value="comment" <?php if ($_SESSION["user"]["mail_comment"] == 1) {echo 'checked';} ?>>
     </div>
     <button class="ui button teal right floated" type="submit">Valider</button>
 </form>
@@ -128,7 +128,7 @@ ob_start();
     </div>
     <div class="field">
         <label>Mail commentaire</label>
-        <input type="checkbox" id="mail_comment" name="mail_comment" value="mail_comment" <?php if ($_SESSION["user"]["mail_comment"] == 1) {echo 'checked';} ?>>
+        <input type="checkbox" name="mail_comment" value="comment" <?php if ($_SESSION["user"]["mail_comment"] == 1) {echo 'checked';} ?>>
     </div>
     <button class="ui button teal right floated" type="submit">Valider</button>
 </form>

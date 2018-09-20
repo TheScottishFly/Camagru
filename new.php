@@ -6,7 +6,7 @@ require_once("controlers/get_images.php");
 
 authVerif(true);
 
-if (isset($_POST['title']) && isset($_POST['photo'])){
+if (isset($_POST['title']) && (isset($_POST['photo']) || isset($_FILES['upload'][0]))){
     $db = dbConnect();
     $title = htmlentities($_POST['title']);
     $filename =  time() . '.png';
@@ -14,7 +14,11 @@ if (isset($_POST['title']) && isset($_POST['photo'])){
     $alpha = 'resources/alphas/';
     $select = $db->prepare("INSERT INTO images(name, title, author_id, nb_like) VALUES(:name, :title, :uid, :nb_like)");
     $select->execute(array('name' => $filename, 'title' => $title, 'uid' => $_SESSION['uid'], 'nb_like' => 0));
-    $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $_POST['photo']));
+    if (isset($_POST['photo']) && strlen($_POST['photo']) > 0) {
+        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $_POST['photo']));
+    } else if (isset($_FILES['upload'][0])) {
+        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $_FILES['upload'][0]));
+    }
     file_put_contents($filepath.$filename, $data);
     $select = $db->prepare("SELECT * FROM images WHERE title=:title AND author_id=:uid");
     $select->execute(array('title' => $title, 'uid' => $_SESSION['uid']));
@@ -61,6 +65,7 @@ ob_start();
     </div>
     <div class="sixteen wide column center aligned">
         <form action="new.php" class="ui form" method="POST" enctype="multipart/form-data" id="postform">
+            <input type="file" id="upload" name="upload" accept="image/png, image/jpeg" />
             <ul class="selection">
                 <li><label><input type="radio" name="alpha" class="alpha" value="alpha1" checked="checked"><img
                                 src=<?= "/resources/alphas/alpha1.png" ?>></label></li>
