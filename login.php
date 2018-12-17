@@ -16,10 +16,14 @@ if (isset($_POST['username']) && isset($_POST['password'])){
     $result = $select->fetchAll();
     if (count($result) > 0) {
         $user = $result[0];
-        $_SESSION['uid'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['user'] = $user;
-        header('Location: index.php');
+        if ($user['confirm'] == 1) {
+            $_SESSION['uid'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['user'] = $user;
+            header('Location: index.php');
+        }
+        elseif ($user['confirm'] == 0)
+            setMessageForm("Compte non confirmé, pensez à cliquer sur le lien dans le mail d'inscription.", 'error');
     }
     else {
         setMessageForm("Echec d'authentification.", 'error');

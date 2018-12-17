@@ -1,32 +1,40 @@
 (function() {
 
     var streaming = false,
-        video        = document.querySelector('#video'),
-        canvas       = document.querySelector('#canvas'),
-        photo        = document.querySelector('#photo'),
-        takebutton  = document.querySelector('#takebutton'),
+        video        = document.getElementById('video'),
+        canvas       = document.getElementById('canvas'),
+        photo        = document.getElementById('photo'),
+        takebutton  = document.getElementById('takebutton'),
         width = 320,
         height = 240;
 
     canvas.style.display = 'none';
 
-    navigator.getMedia = ( navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia);
+    window.addEventListener('DOMContentLoaded', function() {
+        'use strict';
 
-    navigator.getMedia(
-        {
-            video: true,
-            audio: false
-        },
-        function(stream) {
-            video.src = window.URL.createObjectURL(stream);
-        },
-        function(err) {
-            console.log("An error occured! " + err);
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+        window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+
+        function successCallback(stream) {
+            if (video.mozSrcObject !== undefined) {
+                video.mozSrcObject = stream;
+            } else {
+                video.srcObject = stream;
+            }
+            video.play();
         }
-    );
+
+        function errorCallback(error) {
+            console.error('An error occurred: [CODE ' + error.code + ']');
+        }
+
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({video: true}, successCallback, errorCallback);
+        } else {
+            console.log('Native web camera streaming (getUserMedia) not supported in this browser.');
+        }
+    }, false);
 
     video.addEventListener('canplay', function(ev){
         if (!streaming) {
