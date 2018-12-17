@@ -26,7 +26,8 @@
         }
 
         function errorCallback(error) {
-            console.error('An error occurred: [CODE ' + error.code + ']');
+            if (error.code !== undefined)
+                console.error('An error occurred: [CODE ' + error.code + ']');
         }
 
         if (navigator.getUserMedia) {
@@ -36,7 +37,7 @@
         }
     }, false);
 
-    video.addEventListener('canplay', function(ev){
+    video.addEventListener('canplay', function(ev) {
         if (!streaming) {
             height = video.videoHeight / (video.videoWidth/width);
             video.setAttribute('width', width);
@@ -56,7 +57,24 @@
         photo.value = canvas.toDataURL();
     }
 
-    takebutton.addEventListener('click', function(ev){
+    function handleFileSelect(evt) {
+        canvas.style.display = '';
+        canvas.width = width;
+        canvas.height = height;
+
+        var image = new Image();
+        image.onload = function() {
+            canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+            var img = document.querySelector('.alpha:checked').nextSibling;
+            canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        };
+        image.src = URL.createObjectURL(evt.target.files[0]);
+
+        photo.value = canvas.toDataURL();
+    }
+    document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+
+    takebutton.addEventListener('click', function(ev) {
         canvas.style.display = '';
         takepicture();
         ev.preventDefault();
