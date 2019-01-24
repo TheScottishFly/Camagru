@@ -13,7 +13,10 @@ if (isset($_POST['title']) && (isset($_POST['photo']))){
     $filepath = 'resources/photos/';
     $select = $db->prepare("INSERT INTO images(name, title, author_id, nb_like) VALUES(:name, :title, :uid, :nb_like)");
     $select->execute(array('name' => $filename, 'title' => $title, 'uid' => $_SESSION['uid'], 'nb_like' => 0));
-    $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $_POST['photo']));
+    $data = $_POST['photo'];
+    list($type, $data) = explode(';', $data);
+    list(, $data) = explode(',', $data);
+    $data = base64_decode($data);
     file_put_contents($filepath.$filename, $data);
     $select = $db->prepare("SELECT * FROM images WHERE title=:title AND author_id=:uid");
     $select->execute(array('title' => $title, 'uid' => $_SESSION['uid']));

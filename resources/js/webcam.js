@@ -67,10 +67,9 @@
             canvas.getContext('2d').drawImage(image, 0, 0, width, height);
             var img = document.querySelector('.alpha:checked').nextSibling;
             canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+            photo.value = canvas.toDataURL();
         };
         image.src = URL.createObjectURL(evt.target.files[0]);
-
-        photo.value = canvas.toDataURL();
     }
     document.getElementById('upload').addEventListener('change', handleFileSelect, false);
 
