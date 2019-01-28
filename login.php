@@ -47,6 +47,9 @@ ob_start();
             <label>Mot de passe</label>
             <?php echo input('password', 'password'); ?>
         </div>
+        <a href="/reset.php">
+            <button class="ui button red left floated" type="button">Mot de passe oublié</button>
+        </a>
         <button class="ui button teal right floated" type="submit">Valider</button>
     </form>
 
@@ -62,6 +65,9 @@ ob_start();
             <label>Mot de passe</label>
             <?php echo input('password', 'password'); ?>
         </div>
+        <a href="/reset.php">
+            <button class="ui button red left floated" type="button">Mot de passe oublié</button>
+        </a>
         <button class="ui button teal right floated" type="submit">Valider</button>
     </form>
 
@@ -76,6 +82,9 @@ ob_start();
             <label>Mot de passe</label>
             <?php echo input('password', 'password'); ?>
         </div>
+        <a href="/reset.php">
+            <button class="ui button red left floated" type="button">Mot de passe oublié</button>
+        </a>
         <button class="ui button teal right floated" type="submit">Valider</button>
     </form>
 
