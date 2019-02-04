@@ -8,6 +8,7 @@ authVerif(true);
 
 $db = dbConnect();
 $err = 0;
+$exec = 0;
 
 if (isset($_POST['username'])) {
     $username = htmlentities($_POST['username']);
@@ -23,6 +24,7 @@ if ($err == 0 && isset($_POST['email'])) {
         $email = htmlentities($_POST['email']);
         $select = $db->prepare("UPDATE users SET email = ? WHERE id = ?");
         $select->execute(array($email, $_SESSION["uid"]));
+        $exec = 1;
     }
 }
 if ($err == 0 && isset($_POST['password1']) && isset($_POST['password2']) && strlen($_POST['password1']) > 7 && strlen($_POST['password2']) > 7) {
@@ -39,16 +41,24 @@ if ($err == 0 && isset($_POST['password1']) && isset($_POST['password2']) && str
         $password = htmlentities(sha1($_POST['password1']));
         $select = $db->prepare("UPDATE users SET password = ? WHERE id = ?");
         $select->execute(array($password, $_SESSION["uid"]));
+        $exec = 1;
     }
 }
 if ($err == 0) {
     if (isset($_POST['mail_comment'])) {
         $select = $db->prepare("UPDATE users SET mail_comment = 1 WHERE id = ?");
         $select->execute(array($_SESSION["uid"]));
+        $exec = 1;
     } else if (count($_POST) > 0) {
         $select = $db->prepare("UPDATE users SET mail_comment = 0 WHERE id = ?");
         $select->execute(array($_SESSION["uid"]));
+        $exec = 1;
     }
+}
+if ($exec == 1) {
+    session_start();
+    session_destroy();
+    header('Location: index.php');
 }
 
 $select = $db->prepare("SELECT * FROM users WHERE id = ?");
