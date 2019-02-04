@@ -68,6 +68,13 @@ ob_start();
             <form action="image.php" class="ui form" method="POST" id="postform">
                 <input type="hidden" name="img" id="img" value=<?= $_GET["img"] ?>/>
                 <input type="hidden" name="like" id="like"/>
+                <?php if ($_SESSION['uid'] == $img['author_id']) { ?>
+                    <a href=<?php echo "delete.php?img=".$img['id'] ?>>
+                        <button type="button" class="ui button red">
+                            Supprimer
+                        </button>
+                    </a>
+                <?php } ?>
                 <button type="submit" class="ui button blue">
                     <i class="far fa-thumbs-up"></i> <?php echo $img['nb_like']; ?>
                 </button>
