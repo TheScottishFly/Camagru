@@ -37,19 +37,21 @@ if (isset($_SESSION['messageForm'])) {
 
 <div class="ui grid center aligned">
     <div class="ui pagination menu">
-        <?php if ($_GET['page'] != 1) { ?>
-        <a href="?page=<?php echo $_GET['page'] - 1; ?>" class="item">
-            <?php echo $_GET['page'] - 1; ?>
-        </a>
-        <?php } ?>
+        <?php if ($_GET['page'] != 1) {
+            for ($i = 1; $i < $_GET['page']; $i++) {?>
+                <a href="?page=<?php echo $i; ?>" class="item">
+                    <?php echo $i; ?>
+                </a>
+        <?php } } ?>
         <a href="#" class="active item">
             <?php echo $_GET['page']; ?>
         </a>
-        <?php if ($_GET['page'] != $max_page) { ?>
-            <a href="?page=<?php echo $_GET['page'] + 1; ?>" class="item">
-                <?php echo $_GET['page'] + 1; ?>
-            </a>
-        <?php } ?>
+        <?php if ($_GET['page'] < $max_page) {
+            for ($i = $_GET['page'] + 1; $i <= $max_page; $i++) {?>
+                <a href="?page=<?php echo $i; ?>" class="item">
+                    <?php echo $i; ?>
+                </a>
+        <?php } } ?>
     </div>
 </div>
 
