@@ -56,9 +56,8 @@ if ($err == 0) {
     }
 }
 if ($exec == 1) {
-    session_start();
     session_destroy();
-    header('Location: index.php');
+    header('Location: login.php');
 }
 
 $select = $db->prepare("SELECT * FROM users WHERE id = ?");
