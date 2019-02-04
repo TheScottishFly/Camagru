@@ -10,4 +10,4 @@ if (isset($_GET['token'])) {
     $select->execute(array($_GET['token']));
     $_SESSION['user']['confirm'] = 1;
 }
-header("Location: new.php");
+header("Location: login.php");

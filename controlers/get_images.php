@@ -2,9 +2,13 @@
 include_once "utils.php";
 session_start();
 
-function getAllImages() {
+function getAllImages($page) {
     $db = dbConnect();
-    return $db->query("SELECT * FROM images ORDER BY date DESC");
+    $low = $page * 5 - 5;
+    $high  = $low + 5;
+    $querystring = "SELECT * FROM images ORDER BY date DESC LIMIT %d,%d";
+    $req = $db->query(sprintf($querystring, $low, $high));
+    return $req;
 }
 
 function getImagesByAuth($id) {

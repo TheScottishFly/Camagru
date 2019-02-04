@@ -30,7 +30,7 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
             $req = $db->prepare("INSERT INTO users(username, password, email, confirm, token, mail_comment) VALUES(:username, :password, :email, 0, :token, 1)");
             $req->execute(array('username' => $username, 'password' => $password, 'email' => $email, 'token' => $token));
             mail("<".$_POST['email'].">", "Inscription reussie", "Bonjour ".$_POST['username'].", votre inscription est validee !\n\nMerci de confirmer votre compte : http://127.0.0.1:8080/confirm.php?token=".$token."", $headers);
-            setMessageForm("Vous pouvez maintenant vous connecter sur Camagru !", 'success');
+            setMessageForm("Vous pouvez maintenant confirmer votre compte par mail !", 'success');
             header('Location: login.php');
         }
         else {

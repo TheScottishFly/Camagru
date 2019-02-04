@@ -40,10 +40,16 @@ if (isset($_POST['comment']) && isset($_SESSION['uid'])){
 } else if (isset($_POST['like']) && isset($_SESSION['uid'])) {
     $db = dbConnect();
     $img_id = substr($_POST['img'], 0, -1);
-    $select = $db->prepare("UPDATE images SET nb_like = ? WHERE id = ?");
-    $select->execute(array($img['nb_like'] + 1, $img_id));
-    $url = "image.php?img=$img_id";
-    header("Location: ".$url);
+    $select = $db->prepare("SELECT * FROM images WHERE id = ?");
+    $select->execute(array($img_id));
+    $result = $select->fetchAll();
+    if (count($result) > 0) {
+        $img = $result[0];
+        $select = $db->prepare("UPDATE images SET nb_like = ? WHERE id = ?");
+        $select->execute(array($img['nb_like'] + 1, $img_id));
+        $url = "image.php?img=$img_id";
+        header("Location: " . $url);
+    }
 }
 
 $title = $img["title"] . ' - Image';
